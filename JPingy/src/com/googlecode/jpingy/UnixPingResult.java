@@ -28,7 +28,7 @@ public class UnixPingResult extends PingResult {
 		super(pingOutput);
 
 	}
-
+	
 	private void generatePackageArray(List<String> lines) {
 		if (pack == null) {
 			String packages = lines.get(lines.size() - 2);
@@ -36,18 +36,21 @@ public class UnixPingResult extends PingResult {
 		}
 	}
 
+	@Override
 	public int matchTransmitted(List<String> lines) {
 		generatePackageArray(lines);
 		return Integer.parseInt(pack[0].replaceAll("\\D+", ""));
 
 	}
 
+	@Override
 	public int matchReceived(List<String> lines) {
 		generatePackageArray(lines);
 		return Integer.parseInt(pack[1].replaceAll("\\D+", ""));
 
 	}
 
+	@Override
 	public int matchTime(List<String> lines) {
 		generatePackageArray(lines);
 		return Integer.parseInt(pack[3].replaceAll("\\D+", ""));
