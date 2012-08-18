@@ -31,11 +31,11 @@ public class SampleCode {
 		PingResult results = Ping.ping(arguments, Backend.UNIX);
 
 	
-		System.out.println("TTL: " + results.ttl);
+		System.out.println("TTL: " + results.ttl());
 
-		System.out.println("RTT Minimum: " + results.rtt_min);
+		System.out.println("RTT Minimum: " + results.rtt_min());
 
-		System.out.println("Received : " + results.received);
+		System.out.println("Received : " + results.received());
 		
 		System.out.println(results.getRequests());
 	}

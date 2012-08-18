@@ -21,16 +21,56 @@ public abstract class PingResult {
 
 	private List<String> lines;
 
-	public final String address;
-	public final int transmitted;
-	public final int ttl;
-	public final long time;
-	public final int received;
-	public final int payload;
-	public final float rtt_min;
-	public final float rtt_avg;
-	public final float rtt_max;
-	public final float rtt_mdev;
+	private final String address;
+	private final int transmitted;
+	private final int ttl;
+	private final long time;
+	private final int received;
+	private final int payload;
+	private final float rtt_min;
+	private final float rtt_avg;
+	private final float rtt_max;
+	private final float rtt_mdev;
+
+	public String address() {
+		return address;
+	}
+
+	public int transmitted() {
+		return transmitted;
+	}
+
+	public int ttl() {
+		return ttl;
+	}
+
+	public long time() {
+		return time;
+	}
+
+	public int received() {
+		return received;
+	}
+
+	public int payload() {
+		return payload;
+	}
+
+	public float rtt_min() {
+		return rtt_min;
+	}
+
+	public float rtt_avg() {
+		return rtt_avg;
+	}
+
+	public float rtt_max() {
+		return rtt_max;
+	}
+
+	public float rtt_mdev() {
+		return rtt_mdev;
+	}
 
 	protected PingResult(List<String> pingOutput) {
 

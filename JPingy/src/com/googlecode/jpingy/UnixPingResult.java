@@ -121,14 +121,7 @@ public class UnixPingResult extends PingResult {
 		return Integer.parseInt(result.group(1).replaceAll("ttl=", ""));
 	}
 
-	@Override
-	public String toString() {
-		return "PingResult [address=" + address + ", transmitted="
-				+ transmitted + ", ttl=" + ttl + ", time=" + time
-				+ ", received=" + received + ", payload=" + payload
-				+ ", rtt_min=" + rtt_min + ", rtt_avg=" + rtt_avg
-				+ ", rtt_max=" + rtt_max + ", rtt_mdev=" + rtt_mdev + "]";
-	}
+	
 
 	@Override
 	protected int parsePayload(List<String> lines) {
