@@ -9,10 +9,13 @@
  */
 package com.googlecode.jpingy;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.googlecode.jpingy.PingRequest.PingRequestBuilder;
 
 /**
  * 
@@ -22,13 +25,13 @@ import java.util.regex.Pattern;
  */
 public class UnixPingResult extends PingResult {
 
-	private String[] pack;
-
 	public UnixPingResult(List<String> pingOutput) {
 		super(pingOutput);
 
 	}
-	
+
+	private String[] pack;
+
 	private void generatePackageArray(List<String> lines) {
 		if (pack == null) {
 			String packages = lines.get(lines.size() - 2);
@@ -132,6 +135,43 @@ public class UnixPingResult extends PingResult {
 		// TODO Auto-generated method stub
 
 		return Integer.parseInt(lines.get(1).split("bytes")[0].trim());
+	}
+
+	@Override
+	public List<PingRequest> getRequests() {
+
+		List<PingRequest> requests = new ArrayList<PingRequest>();
+		for (String line : getLines()) {
+			if (isPingRequest(line)) {
+				PingRequest request = createPingRequest(line);
+				requests.add(request);
+			}
+		}
+		return requests;
+
+	}
+
+	private PingRequest createPingRequest(String line) {
+		String[] split = line.split(" ");
+		PingRequestBuilder builder = PingRequest.builder();
+
+		int bytes = Integer.parseInt(split[0]);
+		String from = split[3];
+		String fromIP = split[4].replace("(", "").replace(")", "")
+				.replace(":", "");
+		int reqnr = Integer.parseInt(split[5].split("=")[1]);
+		int ttl = Integer.parseInt(split[6].split("=")[1]);
+		float time = Float.parseFloat(split[7].split("=")[1]);
+
+		builder = builder.bytes(bytes).from(from).fromIP(fromIP).reqNr(reqnr)
+				.ttl(ttl).time(time);
+
+		return builder.build();
+
+	}
+
+	private boolean isPingRequest(String line) {
+		return line.contains("bytes from");
 	}
 
 }

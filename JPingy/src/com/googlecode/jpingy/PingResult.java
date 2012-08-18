@@ -18,6 +18,9 @@ import java.util.List;
  * 
  */
 public abstract class PingResult {
+
+	private List<String> lines;
+
 	public final String address;
 	public final int transmitted;
 	public final int ttl;
@@ -31,6 +34,7 @@ public abstract class PingResult {
 
 	protected PingResult(List<String> pingOutput) {
 
+		this.lines = pingOutput;
 		transmitted = matchTransmitted(pingOutput);
 		received = matchReceived(pingOutput);
 		time = matchTime(pingOutput);
@@ -46,6 +50,10 @@ public abstract class PingResult {
 
 		payload = parsePayload(pingOutput);
 
+	}
+
+	public List<String> getLines() {
+		return lines;
 	}
 
 	protected abstract int parsePayload(List<String> lines);
@@ -67,6 +75,8 @@ public abstract class PingResult {
 	protected abstract String matchIP(List<String> lines);
 
 	protected abstract int matchTTL(List<String> lines);
+
+	public abstract List<PingRequest> getRequests();
 
 	@Override
 	public String toString() {

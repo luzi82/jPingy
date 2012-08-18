@@ -52,6 +52,7 @@ public class Ping {
 			while ((s = stdInput.readLine()) != null) {
 
 				lines.add(s);
+				System.out.println(s);
 			}
 
 			p.destroy();
