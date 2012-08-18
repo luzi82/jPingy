@@ -26,7 +26,7 @@ public class SampleCode {
 		// TODO Auto-generated method stub
 
 		PingArguments arguments = new PingArguments.Builder().url("google.com")
-				.timeout(5000).repeat(2).bytes(32).build();
+				.timeout(5000).count(2).bytes(32).build();
 
 		PingResult results = Ping.ping(arguments, Backend.UNIX);
 
