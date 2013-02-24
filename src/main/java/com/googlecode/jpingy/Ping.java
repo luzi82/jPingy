@@ -46,7 +46,7 @@ public class Ping {
 
 			p = Runtime.getRuntime().exec(command);
 			p.waitFor();
-			int exitValue = p.exitValue();
+			// int exitValue = p.exitValue();
 			// System.err.println("exitValue=" + exitValue);
 
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
