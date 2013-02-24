@@ -10,12 +10,19 @@
 package com.googlecode.jpingy;
 
 public class PingArguments {
+	public static final int DEFAULT_COUNT = 4;
+
 	String url;
-	int count;
+	int count = DEFAULT_COUNT;
 	long timeout;
 	int payload_bytes;
 	long interval;
 	int ttl;
+
+	boolean timeout_enabled = false;
+	boolean payload_bytes_enabled = false;
+	boolean interval_enabled = false;
+	boolean ttl_enabled = false;
 
 	public PingArguments() {
 
@@ -42,16 +49,19 @@ public class PingArguments {
 		}
 
 		public Builder timeout(long timeout) {
+			arguments.timeout_enabled = true;
 			arguments.timeout = timeout;
 			return this;
 		}
 
 		public Builder bytes(int bytes) {
+			arguments.payload_bytes_enabled = true;
 			arguments.payload_bytes = bytes;
 			return this;
 		}
 
 		public Builder ttl(int ttl) {
+			arguments.ttl_enabled = true;
 			arguments.ttl = ttl;
 			return this;
 		}
@@ -63,6 +73,7 @@ public class PingArguments {
 		 * @return
 		 */
 		public Builder interval(long interval) {
+			arguments.interval_enabled = true;
 			arguments.interval = interval;
 			return this;
 		}
@@ -76,13 +87,21 @@ public class PingArguments {
 	public String getCommand() {
 		StringBuilder b = new StringBuilder();
 
-		b.append("ping").append(" ").append("-c").append(" ").append(count)
-				.append("")
-
-				.append("-W").append("").append(timeout).append(" ")
-
-				.append("-s").append(" ").append(payload_bytes).append(" ")
-				.append(url);
+		b.append("ping");
+		b.append(" -c ").append(count);
+		if (timeout_enabled) {
+			b.append(" -W ").append(timeout);
+		}
+		if (payload_bytes_enabled) {
+			b.append(" -s ").append(payload_bytes);
+		}
+		if (interval_enabled) {
+			b.append(" -i ").append(interval);
+		}
+		if (ttl_enabled) {
+			b.append(" -t ").append(ttl);
+		}
+		b.append(" ").append(url);
 
 		return b.toString();
 	}
