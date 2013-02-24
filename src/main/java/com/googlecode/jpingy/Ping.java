@@ -41,18 +41,22 @@ public class Ping {
 
 			Process p;
 
-			p = Runtime.getRuntime().exec(ping.getCommand());
+			String command = ping.getCommand();
+			// System.err.println(command);
 
-			BufferedReader stdInput = new BufferedReader(new InputStreamReader(
-					p.getInputStream()));
+			p = Runtime.getRuntime().exec(command);
+			p.waitFor();
+			int exitValue = p.exitValue();
+			// System.err.println("exitValue=" + exitValue);
+
+			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
 			String s;
 
 			List<String> lines = new ArrayList<String>();
 			while ((s = stdInput.readLine()) != null) {
-
 				lines.add(s);
-				System.out.println(s);
+				// System.err.println(s);
 			}
 
 			p.destroy();
