@@ -7,9 +7,11 @@
 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.googlecode.jpingy;
+package tk.ddvudo.ssrdetection.Utils.netHadler.jPingy;
 
-import com.googlecode.jpingy.Ping.Backend;
+import java.util.Locale;
+
+import tk.ddvudo.ssrdetection.Utils.netHadler.jPingy.Ping.Backend;
 
 /**
  * 
@@ -25,11 +27,14 @@ public class SampleCode {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		PingArguments arguments = new PingArguments.Builder().url("google.com")
+		PingArguments arguments = new PingArguments.Builder().url("baidu.com")
 				.timeout(5000).count(2).bytes(32).build();
 
-		PingResult results = Ping.ping(arguments, Backend.UNIX);
-
+		PingResult results = Ping.ping(arguments, Backend.WINDOWS_zhCN);
+		
+		Locale locale = Locale.getDefault();  
+		System.out.println(locale.getLanguage());  
+		System.out.println(locale.getCountry());
 	
 		System.out.println("TTL: " + results.ttl());
 
