@@ -7,7 +7,9 @@
 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.googlecode.jpingy;
+package main.java.com.googlecode.jPingy;
+
+import main.java.com.googlecode.jPingy.Ping.Backend;
 
 public class PingArguments {
 	public static final int DEFAULT_COUNT = 4;
@@ -84,24 +86,41 @@ public class PingArguments {
 	}
 
 	// TODO make adaptable if certain properaties aren't set
-	public String getCommand() {
+	public String getCommand(Backend sysType) {
 		StringBuilder b = new StringBuilder();
-
-		b.append("ping");
-		b.append(" -c ").append(count);
-		if (timeout_enabled) {
-			b.append(" -W ").append(timeout);
+		if(sysType.equals(Backend.UNIX)) {
+			b.append("ping");
+			b.append(" -c ").append(count);
+			if (timeout_enabled) {
+				b.append(" -W ").append(timeout);
+			}
+			if (payload_bytes_enabled) {
+				b.append(" -s ").append(payload_bytes);
+			}
+			if (interval_enabled) {
+				b.append(" -i ").append(interval);
+			}
+			if (ttl_enabled) {
+				b.append(" -t ").append(ttl);
+			}
+			b.append(" ").append(url);
+		}else if(sysType.equals(Backend.WINDOWS_zhCN)) {
+			b.append("ping");
+			b.append(" -n ").append(count);
+			if (timeout_enabled) {
+				b.append(" -w ").append(timeout);
+			}
+			if (payload_bytes_enabled) {
+				b.append(" -l ").append(payload_bytes);
+			}
+			if (interval_enabled) {
+//				b.append(" -i ").append(interval);
+			}
+			if (ttl_enabled) {
+				b.append(" -i ").append(ttl);
+			}
+			b.append(" ").append(url);
 		}
-		if (payload_bytes_enabled) {
-			b.append(" -s ").append(payload_bytes);
-		}
-		if (interval_enabled) {
-			b.append(" -i ").append(interval);
-		}
-		if (ttl_enabled) {
-			b.append(" -t ").append(ttl);
-		}
-		b.append(" ").append(url);
 
 		return b.toString();
 	}

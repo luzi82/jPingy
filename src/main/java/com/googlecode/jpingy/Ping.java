@@ -8,7 +8,7 @@
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.googlecode.jpingy;
+package main.java.com.googlecode.jPingy;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -31,6 +31,14 @@ public class Ping {
 				return new UnixPingResult(output);
 			}
 
+		},
+		
+		WINDOWS_zhCN {
+			@Override
+			public PingResult getResult(List<String> output) {
+				return new WinPingResult(output);
+			}
+
 		};
 
 		public abstract PingResult getResult(List<String> output);
@@ -41,7 +49,7 @@ public class Ping {
 
 			Process p;
 
-			String command = ping.getCommand();
+			String command = ping.getCommand(backend);
 			// System.err.println(command);
 
 			p = Runtime.getRuntime().exec(command);
@@ -49,7 +57,7 @@ public class Ping {
 			// int exitValue = p.exitValue();
 			// System.err.println("exitValue=" + exitValue);
 
-			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream(),"gbk"));
 
 			String s;
 

@@ -7,7 +7,7 @@
 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.googlecode.jpingy;
+package main.java.com.googlecode.jPingy;
 
 import java.util.List;
 
@@ -21,16 +21,16 @@ public abstract class PingResult {
 
 	private List<String> lines;
 
-	private final String address;
-	private final int transmitted;
-	private final int ttl;
-	private final long time;
-	private final int received;
-	private final int payload;
-	private final float rtt_min;
-	private final float rtt_avg;
-	private final float rtt_max;
-	private final float rtt_mdev;
+	private String address;
+	private int transmitted = -1;
+	private int ttl = -1;
+	private long time = -1;
+	private int received = -1;
+	private int payload = -1;
+	private float rtt_min = -1;
+	private float rtt_avg = -1;
+	private float rtt_max = -1;
+	private float rtt_mdev = -1;
 
 	public String address() {
 		return address;
@@ -74,21 +74,26 @@ public abstract class PingResult {
 
 	protected PingResult(List<String> pingOutput) {
 
-		this.lines = pingOutput;
-		transmitted = matchTransmitted(pingOutput);
-		received = matchReceived(pingOutput);
-		time = matchTime(pingOutput);
+		try {
+			this.lines = pingOutput;
+			transmitted = matchTransmitted(pingOutput);
+			received = matchReceived(pingOutput);
+			time = matchTime(pingOutput);
 
-		rtt_min = matchRttMin(pingOutput);
-		rtt_avg = matchRttAvg(pingOutput);
-		rtt_max = matchRttMax(pingOutput);
-		rtt_mdev = matchRttMdev(pingOutput);
+			rtt_min = matchRttMin(pingOutput);
+			rtt_avg = matchRttAvg(pingOutput);
+			rtt_max = matchRttMax(pingOutput);
+			rtt_mdev = matchRttMdev(pingOutput);
 
-		ttl = matchTTL(pingOutput);
+			ttl = matchTTL(pingOutput);
 
-		address = matchIP(pingOutput);
+			address = matchIP(pingOutput);
 
-		payload = parsePayload(pingOutput);
+			payload = parsePayload(pingOutput);
+		} catch (Exception e) {
+//			e.printStackTrace();
+			System.out.println("连接失败");
+		}
 
 	}
 
